@@ -199,8 +199,7 @@
 </template>
 
 <script>
-import $ from 'jquery'
-import { constants } from 'crypto';
+// import $ from 'jquery'
 
 export default {
   props: {
@@ -227,7 +226,7 @@ export default {
           path: 0,
           showID: [1, 6],
           button: [],
-          next: [2, 4],
+          next: [2, 4]
         },
         {
           id: 2,
@@ -254,9 +253,9 @@ export default {
           type: 'text',
           message: '我想訂房12',
           path: 1,
-          showID: [1,6],
+          showID: [1, 6],
           button: [],
-          next: [2, 4],
+          next: [2, 4]
         },
         {
           id: 4,
@@ -272,7 +271,7 @@ export default {
           user: false,
           type: 'image',
           message: '123',
-          image: "https://i.imgur.com/4tQA11z.jpg",
+          image: 'https://i.imgur.com/4tQA11z.jpg',
           path: 0,
           button: [],
           showID: [1566036643889],
@@ -318,16 +317,16 @@ export default {
         }
       },
       tempFeaturesBarMessage: {
-          id: 1,
-          user: false,
-          type: 'text',
-          message: 'bot',
-          image: '',
-          path: 0,
-          showPath: 0,
-          showID: [],
-          next: [],
-          button: []
+        id: 1,
+        user: false,
+        type: 'text',
+        message: 'bot',
+        image: '',
+        path: 0,
+        showPath: 0,
+        showID: [],
+        next: [],
+        button: []
       },
       ADDString: {
         bot: 'ADD',
@@ -384,12 +383,12 @@ export default {
     changeSaysType (user, SaysType) {
       const vm = this
       if (!user) {
-        if(vm.botSaysEdit) {return}
+        if (vm.botSaysEdit) { return }
         vm.botSaysType = SaysType
         vm.tempAddMessage.bot.type = SaysType
         vm.tempAddMessage.bot.message = ''
       } else {
-        if(vm.userSaysEdit) {return}
+        if (vm.userSaysEdit) { return }
         vm.userSaysType = SaysType
         vm.tempAddMessage.user.type = SaysType
         vm.tempAddMessage.user.message = ''
@@ -398,14 +397,14 @@ export default {
     addMessage (user, SaysEdit, SaysPath) {
       const vm = this
       let timesTamp = new Date().getTime()
-      let endIndex = vm.message.findIndex(function(item) {
+      let endIndex = vm.message.findIndex(function (item) {
         return item.id === vm.messageEndId
       })
-      let showIndex = vm.message.findIndex(function(item) {
+      let showIndex = vm.message.findIndex(function (item) {
         return item.id === vm.saysEditID
       })
       if (SaysPath) {
-        vm.message[showIndex].showID.push(timesTamp) 
+        vm.message[showIndex].showID.push(timesTamp)
         vm.message[showIndex].showPath = vm.message[showIndex].showID.length - 1
 
         vm.tempAddMessage[user].id = timesTamp
@@ -414,8 +413,8 @@ export default {
 
         vm.message.push(Object.assign({}, vm.tempAddMessage[user]))
 
-        vm.message.forEach(function(item) {
-          if(item.showID === vm.message[showIndex].showID) {
+        vm.message.forEach(function (item) {
+          if (item.showID === vm.message[showIndex].showID) {
             item.showPath = vm.message[showIndex].showPath
           }
         })
@@ -430,7 +429,7 @@ export default {
         return
       }
       if (SaysEdit) {
-        let index = vm.message.findIndex(function(item) {
+        let index = vm.message.findIndex(function (item) {
           return item.id === vm.saysEditID
         })
         // vm.message[index] = vm.tempAddMessage[user]
@@ -456,7 +455,7 @@ export default {
       }
       vm.tempAddMessage[user].id = timesTamp
       vm.tempAddMessage[user].showID.push(timesTamp)
-      
+
       vm.message[endIndex].next[vm.message[endIndex].path] = timesTamp
       console.log(vm.message[endIndex])
       vm.message.push(Object.assign({}, vm.tempAddMessage[user]))
@@ -469,7 +468,7 @@ export default {
       // initial
       vm.tempAddMessageInit(user)
     },
-    fileUploader(user) {
+    fileUploader (user) {
       const vm = this
       const accessToken = 'a23a8f96cb5ca9d14645693cce5ee6dd8cfc313b'
       const album = 'nbWD21o'
@@ -498,25 +497,25 @@ export default {
     changeButtonPath (id, index) {
       const vm = this
       // console.log(id)
-      let changeButtonIndex = vm.message.findIndex(function(item) {
+      let changeButtonIndex = vm.message.findIndex(function (item) {
         return id === item.id
       })
       vm.message[changeButtonIndex].path = index
     },
     editMessage (id, user, inMessageBlock) {
       const vm = this
-      if (window.event.target.parentNode.className === 'messageButtonBar') {return}
+      if (window.event.target.parentNode.className === 'messageButtonBar') { return }
       // featuresBar 位置
       if (vm.botSaysPath || vm.userSaysPath) {
         vm.botSaysPath = false
         vm.userSaysPath = false
       }
-      if(inMessageBlock){ vm.featuresBarY = window.event.target.offsetTop }
+      if (inMessageBlock) { vm.featuresBarY = window.event.target.offsetTop }
       vm.saysEditID = id
-      let changeButtonIndex = vm.message.findIndex(function(item) {
+      let changeButtonIndex = vm.message.findIndex(function (item) {
         return vm.saysEditID === item.id
       })
-      let messageItem = vm.message.find(function(item) {
+      let messageItem = vm.message.find(function (item) {
         return id === item.id
       })
       vm.tempFeaturesBarMessage = Object.assign({}, messageItem)
@@ -541,7 +540,7 @@ export default {
         vm.userSaysType = vm.message[changeButtonIndex].type
       }
     },
-    tempAddMessageInit(user) {
+    tempAddMessageInit (user) {
       const vm = this
       vm.tempAddMessage[user].next = []
       vm.tempAddMessage[user].message = ''
@@ -558,28 +557,28 @@ export default {
       // console.log(window.event.path[1].scrollTop)
       // console.log(window.event.target.offsetTop)
       // console.log(window.event.clientY)
-      let messageItem = vm.message.find(function(item) {
+      let messageItem = vm.message.find(function (item) {
         return id === item.id
       })
       // let userName = 'bot'
       // if (user) {userName = 'user'}
       if (vm.botSaysEdit || vm.userSaysEdit) { return }
-      vm.mouseenterTime = setTimeout(function (){
+      vm.mouseenterTime = setTimeout(function () {
         vm.tempFeaturesBarMessage = Object.assign({}, messageItem)
         vm.saysEditID = id
         vm.saysEditUser = user
         vm.featuresBarY = barY
         vm.messageY = messageY
-      },1000)
+      }, 1000)
     },
     mouseleave () {
       const vm = this
       clearTimeout(vm.mouseenterTime)
       if (vm.botSaysEdit || vm.userSaysEdit || vm.botSaysPath || vm.userSaysPath) { return }
-      vm.mouseenterTime = setTimeout(function (){
+      vm.mouseenterTime = setTimeout(function () {
         vm.saysEditID = null
         vm.featuresBarY = 0
-      },10000)
+      }, 10000)
     },
     scroll (e) {
       const vm = this
@@ -590,10 +589,10 @@ export default {
       vm.tempAddMessageInit('bot')
       vm.tempAddMessageInit('user')
       clearTimeout(vm.mouseenterTime)
-      if (vm.botSaysPath || vm.userSaysPath) {return}
+      if (vm.botSaysPath || vm.userSaysPath) { return }
       // !vm.saysEditUser ? vm.botSaysPath = true : vm.userSaysPath = true
       console.log(vm.saysEditUser)
-      if(!vm.tempFeaturesBarMessage.user) {
+      if (!vm.tempFeaturesBarMessage.user) {
         vm.botSaysPath = true
       } else {
         vm.userSaysPath = true
@@ -607,18 +606,18 @@ export default {
       // console.log(vm.saysEditUser)
       // console.log(vm.saysEditID)
     },
-    arrow(arrow) {
+    arrow (arrow) {
       // arrow false is back, arrow true is forward
       const vm = this
       let a = -1
       if (arrow) { a = 1 }
-      if(vm.tempFeaturesBarMessage.type === 'button') {
+      if (vm.tempFeaturesBarMessage.type === 'button') {
         let changeButtonIndex = vm.messageIndex(vm.tempFeaturesBarMessage.id)
         console.log(arrow)
         console.log(vm.message[changeButtonIndex].path)
         console.log(vm.message[changeButtonIndex].next)
-        if (arrow && vm.message[changeButtonIndex].path === vm.message[changeButtonIndex].button.length - 1) {return}
-        if (!arrow && vm.message[changeButtonIndex].path === 0) {return}
+        if (arrow && vm.message[changeButtonIndex].path === vm.message[changeButtonIndex].button.length - 1) { return }
+        if (!arrow && vm.message[changeButtonIndex].path === 0) { return }
         vm.message[changeButtonIndex].path = vm.message[changeButtonIndex].path + a
 
         vm.tempFeaturesBarMessage = Object.assign({}, vm.message[changeButtonIndex])
@@ -628,10 +627,10 @@ export default {
       if (vm.tempFeaturesBarMessage.showPath === 0 && !arrow) { return }
       if (vm.tempFeaturesBarMessage.showPath === vm.tempFeaturesBarMessage.showID.length - 1 && arrow) { return }
       const showPath = vm.tempFeaturesBarMessage.showPath
-      let previousID = vm.tempFeaturesBarMessage.showID[showPath+a]
+      let previousID = vm.tempFeaturesBarMessage.showID[showPath + a]
 
-      vm.message.forEach(function(item) {
-        if(item.showID === vm.tempFeaturesBarMessage.showID) {
+      vm.message.forEach(function (item) {
+        if (item.showID === vm.tempFeaturesBarMessage.showID) {
           item.showPath = item.showPath + a
         }
       })
@@ -641,32 +640,32 @@ export default {
     },
     messageIndex (id) {
       const vm = this
-      return vm.message.findIndex(function(item) {
+      return vm.message.findIndex(function (item) {
         return id === item.id
       })
     },
     deleteMessage () {
       const vm = this
-      let filterMessageIndex = vm.filterMessage.findIndex(function(item) {
-          return vm.tempFeaturesBarMessage.id === item.id
-        })
+      let filterMessageIndex = vm.filterMessage.findIndex(function (item) {
+        return vm.tempFeaturesBarMessage.id === item.id
+      })
       if (vm.tempFeaturesBarMessage.showID.length > 1) {
         let deleteID = vm.tempFeaturesBarMessage.id
         let deleteShowIDIndex = vm.tempFeaturesBarMessage.showPath
         let previousShowID = null
-        if (deleteShowIDIndex !== 0){
+        if (deleteShowIDIndex !== 0) {
           previousShowID = vm.tempFeaturesBarMessage.showID[deleteShowIDIndex - 1]
         }
         let nextShowID = null
-        if (deleteShowIDIndex !== vm.tempFeaturesBarMessage.showID.length -1 ) {
+        if (deleteShowIDIndex !== vm.tempFeaturesBarMessage.showID.length - 1) {
           nextShowID = vm.tempFeaturesBarMessage.showID[deleteShowIDIndex + 1]
         }
         vm.message[vm.messageIndex(deleteID)].showID.splice(deleteShowIDIndex, 1)
         vm.message.splice(vm.messageIndex(deleteID), 1)
         let i = -1
         if (deleteShowIDIndex === 0) { i = 0 }
-        vm.message.forEach(function(item) {
-          if(item.showID === vm.tempFeaturesBarMessage.showID) {
+        vm.message.forEach(function (item) {
+          if (item.showID === vm.tempFeaturesBarMessage.showID) {
             item.showPath = item.showPath + i
           }
         })
@@ -676,7 +675,7 @@ export default {
         vm.saysEditID = StartID
         vm.messageStartId = StartID
       } else {
-        let deleteIndex = filterMessageIndex
+        // let deleteIndex = filterMessageIndex
         let previousID = null
         if (filterMessageIndex > 0) {
           previousID = vm.filterMessage[filterMessageIndex - 1].id
@@ -686,7 +685,7 @@ export default {
         if (vm.tempFeaturesBarMessage.next.length !== 0) {
           nextID = vm.tempFeaturesBarMessage.next[vm.tempFeaturesBarMessage.path]
         }
-        if(previousID === null) {
+        if (previousID === null) {
           vm.messageStartId = nextID
         } else {
           vm.message[vm.messageIndex(previousID)].next[vm.message[vm.messageIndex(previousID)].path] = nextID
@@ -698,7 +697,7 @@ export default {
         vm.userSaysEdit = false
         vm.tempAddMessageInit('bot')
         vm.tempAddMessageInit('user')
-        console.log(previousID, deleteID, nextID)
+        // console.log(previousID, deleteID, nextID)
       }
     },
     init () {
@@ -733,7 +732,7 @@ export default {
         }
       })
       // console.log(tempMessage)
-      if (tempMessage.length !== 0 ) {
+      if (tempMessage.length !== 0) {
         vm.messageEndId = tempMessage[tempMessage.length - 1].id
       }
       return tempMessage
@@ -743,7 +742,7 @@ export default {
       return vm.featuresBarY - vm.messageY
     }
   },
-  created() {
+  created () {
     this.message = []
     this.messageStartId = null
   }
