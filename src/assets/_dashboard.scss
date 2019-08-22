@@ -128,7 +128,8 @@ textarea {
 .addImage {
   background-color: #dedede;
   color: #cacbd0;
-  width: 291px;
+  max-width: 291px;
+  width: 70%;
   margin: -23px auto 0;
   height: 150px;
   background-size: cover;
@@ -153,9 +154,12 @@ textarea {
 .addButton {
   background: $text;
   color: #cacbd0;
-  width: 291px;
+  max-width: 291px;
+  width: 70%;
   margin: -23px auto 0;
   input{
+    max-width: 291px;
+    width: 80%;
     text-align: center;
   }
   .rounded {
@@ -396,7 +400,7 @@ textarea {
   transition: all 1.5s;
   &-left {
     position: absolute;
-    left: -35px;
+    left: -52px;
     // top: 627px;
     // bottom: 100px;
     background-color: #e7e7e7;
@@ -410,7 +414,7 @@ textarea {
   }
   &-right {
     position: absolute;
-    right: -30px;
+    right: -52px;
     // bottom: 100px;
     background-color: #e7e7e7;
     color: #4745fb;

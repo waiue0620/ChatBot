@@ -1,162 +1,158 @@
 <template>
   <div>
-    <div class="row justify-content-center mt-3">
-      <div class="col-3 top8">
-        <div class="d-flex justify-content-end" :class="{ bot: botSays, editSays: botSaysEdit, pathSays: botSaysPath }">
-          <div class="btn btn-lg btn-secondary rounded-pill ml-auto" @click.capture="openSays('bot')">
-            <div class="d-flex justify-content-around">
-              <p class="ml-auto mb-0" v-if="!botSaysEdit">BOT SAYS</p>
-              <p class="ml-auto mb-0" v-if="botSaysEdit">EDIT MESSAGE</p>
-              <p class="ml-auto mt-1 cursor-pointer mb-0" v-if="botSays || botSaysEdit || botSaysPath" @click="offSays('bot')"><i class="material-icons">close</i></p>
-            </div>
-            <section class="mt-3" v-if="botSays || botSaysEdit || botSaysPath">
-              <ul class="nav">
-                <li class="ml-3"><a href="#" class="px-2 pt-2 rounded-top text-white" :class="{ active: botSaysType === 'text' }" @click="changeSaysType(false, 'text')"><i class="material-icons">text_format</i></a></li>
-                <li class="ml-3"><a href="#" class="px-2 pt-2 rounded-top text-white" :class="{ active: botSaysType === 'image' }" @click="changeSaysType(false, 'image')"><i class="material-icons">add_a_photo</i></a></li>
-                <li class="ml-3"><a href="#" class="px-2 pt-2 rounded-top text-white" :class="{ active: botSaysType === 'button' }" @click="changeSaysType(false, 'button')" v-if="!botSaysPath"><i class="material-icons">view_list</i></a></li>
-              </ul>
-              <form>
-                <div class="bg-white ml-3 d-none" :class="{ 'd-block': botSaysType === 'text' }">
-                  <textarea class="bg-text border-0 my-3 rounded" style="height: 100px;" name="text" cols="30" rows="10" placeholder="Type a message..." v-model="tempAddMessage.bot.message"></textarea>
-                </div>
-                <div class="bg-white ml-3 pb-3 d-none" :class="{ 'd-block': botSaysType === 'image' }">
-                  <textarea class="bg-text border-0 my-3 rounded-top" style="height: 50px;" name="text" cols="30" rows="10" placeholder="Text (optional)" v-model="tempAddMessage.bot.message"></textarea>
-                  <label class="addImage rounded-bottom cursor-pointer" for="file-uploaderBot" v-if="tempAddMessage.bot.image === ''">
-                    <i class="material-icons mt-5">add<p>ADD IMAGE</p></i>
-                  </label>
-                  <label class="addImage rounded-bottom cursor-pointer" for="file-uploaderBot" v-if="tempAddMessage.bot.image !== ''" :style="{backgroundImage: 'url(' + tempAddMessage.bot.image + ')'}">
-                    <div class="imageReoplace">
-                      <i class="material-icons mt-5 ">photo_camera</i>
-                      <p>Replace</p>
-                    </div>
-                  </label>
-                  <input type="file" id="file-uploaderBot" @change="fileUploader('bot')" ref="bot" style="display:none">
-                </div>
-                <div class="bg-white ml-3 pb-3 d-none" :class="{ 'd-block': botSaysType === 'button' }">
-                  <textarea class="bg-text border-0 my-3 rounded-top" style="height: 70px;" name="text" cols="30" rows="10" placeholder="Text" v-model="tempAddMessage.bot.message"></textarea>
-                  <div class="addButton rounded-bottom cursor-pointer">
-                    <input class="border-0 my-2 rounded" type="text" placeholder="Button 1" v-model="tempAddMessage.bot.button[0]">
-                    <input class="border-0 my-2 rounded" type="text" placeholder="Button 2" v-model="tempAddMessage.bot.button[1]">
-                    <input class="border-0 my-2 rounded" type="text" placeholder="Button 3" v-model="tempAddMessage.bot.button[2]">
-                  </div>
-                </div>
-              </form>
-              <div class="d-flex text-secondary1 mt-3">
-                <button class="ml-auto mr-4 btn btn-link bg-white rounded-pill d-flex font-weight-bold d-flex justify-content-center" style="width:110px;" @click="addMessage('bot', botSaysEdit, botSaysPath)">{{ ADDString.bot }}<i class="ml-2 material-icons">message</i></button>
-              </div>
-            </section>
+    <div class="wrap mt-3">
+      <div class="botSays top8" :class="{ bot: botSays, editSays: botSaysEdit, pathSays: botSaysPath }">
+        <div class="btn btn-lg btn-secondary rounded-pill ml-auto" @click.capture="openSays('bot')">
+          <div class="d-flex justify-content-around">
+            <p class="ml-auto mb-0" v-if="!botSaysEdit">BOT SAYS</p>
+            <p class="ml-auto mb-0" v-if="botSaysEdit">EDIT MESSAGE</p>
+            <p class="ml-auto mt-1 cursor-pointer mb-0" v-if="botSays || botSaysEdit || botSaysPath" @click="offSays('bot')"><i class="material-icons">close</i></p>
           </div>
+          <section class="mt-3" v-if="botSays || botSaysEdit || botSaysPath">
+            <ul class="nav">
+              <li class="ml-3"><a href="#" class="px-2 pt-2 rounded-top text-white" :class="{ active: botSaysType === 'text' }" @click="changeSaysType(false, 'text')"><i class="material-icons">text_format</i></a></li>
+              <li class="ml-3"><a href="#" class="px-2 pt-2 rounded-top text-white" :class="{ active: botSaysType === 'image' }" @click="changeSaysType(false, 'image')"><i class="material-icons">add_a_photo</i></a></li>
+              <li class="ml-3"><a href="#" class="px-2 pt-2 rounded-top text-white" :class="{ active: botSaysType === 'button' }" @click="changeSaysType(false, 'button')" v-if="!botSaysPath"><i class="material-icons">view_list</i></a></li>
+            </ul>
+            <form>
+              <div class="bg-white ml-3 d-none" :class="{ 'd-block': botSaysType === 'text' }">
+                <textarea class="bg-text border-0 my-3 rounded" style="width: 70%; height: 100px;" name="text" rows="10" placeholder="Type a message..." v-model="tempAddMessage.bot.message"></textarea>
+              </div>
+              <div class="bg-white ml-3 pb-3 d-none" :class="{ 'd-block': botSaysType === 'image' }">
+                <textarea class="bg-text border-0 my-3 rounded-top" style="width: 70%; height: 50px;" name="text" rows="10" placeholder="Text (optional)" v-model="tempAddMessage.bot.message"></textarea>
+                <label class="addImage rounded-bottom cursor-pointer" for="file-uploaderBot" v-if="tempAddMessage.bot.image === ''">
+                  <i class="material-icons mt-5">add<p>ADD IMAGE</p></i>
+                </label>
+                <label class="addImage rounded-bottom cursor-pointer" for="file-uploaderBot" v-if="tempAddMessage.bot.image !== ''" :style="{backgroundImage: 'url(' + tempAddMessage.bot.image + ')'}">
+                  <div class="imageReoplace">
+                    <i class="material-icons mt-5 ">photo_camera</i>
+                    <p>Replace</p>
+                  </div>
+                </label>
+                <input type="file" id="file-uploaderBot" @change="fileUploader('bot')" ref="bot" style="display:none">
+              </div>
+              <div class="bg-white ml-3 pb-3 d-none" :class="{ 'd-block': botSaysType === 'button' }">
+                <textarea class="bg-text border-0 my-3 rounded-top" style="width: 70%; height: 70px;" name="text" rows="10" placeholder="Text" v-model="tempAddMessage.bot.message"></textarea>
+                <div class="addButton rounded-bottom cursor-pointer">
+                  <input class="border-0 my-2 rounded" type="text" placeholder="Button 1" v-model="tempAddMessage.bot.button[0]">
+                  <input class="border-0 my-2 rounded" type="text" placeholder="Button 2" v-model="tempAddMessage.bot.button[1]">
+                  <input class="border-0 my-2 rounded" type="text" placeholder="Button 3" v-model="tempAddMessage.bot.button[2]">
+                </div>
+              </div>
+            </form>
+            <div class="d-flex text-secondary1 mt-3">
+              <button class="ml-auto mr-4 btn btn-link bg-white rounded-pill d-flex font-weight-bold d-flex justify-content-center" style="width:110px;" @click="addMessage('bot', botSaysEdit, botSaysPath)">{{ ADDString.bot }}<i class="ml-2 material-icons">message</i></button>
+            </div>
+          </section>
         </div>
       </div>
-      <div class="col-3">
-        <section class="phome">
-          <div class="phomeMessage">
-            <div class="d-flex">
-              <p class="pl-4 pt-1 mr-auto">15:03</p>
-              <div class="systemrow d-flex pr-2 pb-2">
-                <div class="phonesignal align-self-center"></div>
-                <div class="wifisignal align-self-center mx-1"></div>
-                <div class="batteryIcon align-self-center"></div>
-              </div>
+      <section class="phome">
+        <div class="phomeMessage">
+          <div class="d-flex">
+            <p class="pl-4 pt-1 mr-auto">15:03</p>
+            <div class="systemrow d-flex pr-2 pb-2">
+              <div class="phonesignal align-self-center"></div>
+              <div class="wifisignal align-self-center mx-1"></div>
+              <div class="batteryIcon align-self-center"></div>
             </div>
-            <div class="messengerTopRow">
-              <div class="backarrow"></div>
-              <div class="profile-picture"></div>
-              <div class="botname">your bot</div>
-              <div class="bot_subtitle">Typically replies instantly</div>
-              <div class="block">
-                <span class="thick">
-                  <i class="material-icons text-white" role="img" aria-label="done">done</i>
-                </span><span class="dropdown">
-                  <i class="material-icons text-white" role="img" aria-label="arrow_drop_down">arrow_drop_down</i>
-                </span>
-              </div>
+          </div>
+          <div class="messengerTopRow">
+            <div class="backarrow"></div>
+            <div class="profile-picture"></div>
+            <div class="botname">your bot</div>
+            <div class="bot_subtitle">Typically replies instantly</div>
+            <div class="block">
+              <span class="thick">
+                <i class="material-icons text-white" role="img" aria-label="done">done</i>
+              </span><span class="dropdown">
+                <i class="material-icons text-white" role="img" aria-label="arrow_drop_down">arrow_drop_down</i>
+              </span>
             </div>
-            <div class="message" @scroll="scroll">
-              <div class="d-flex align-items-center flex-column">
-                <div class="profile-picture profile-picture-bg m-0 position-static"></div>
-                <p class="m-0 botname">your bot</p>
-                <p class="m-0 fans">0 people like this</p>
-                <p class="m-0 page-category">App page</p>
+          </div>
+          <div class="message" @scroll="scroll">
+            <div class="d-flex align-items-center flex-column">
+              <div class="profile-picture profile-picture-bg m-0 position-static"></div>
+              <p class="m-0 botname">your bot</p>
+              <p class="m-0 fans">0 people like this</p>
+              <p class="m-0 page-category">App page</p>
+            </div>
+            <div class="messageBlock cursor-pointer" :class="{ 'active': saysEditID === item.id }"  @mouseenter="mouseenter(item.id, item.user)" @mouseleave='mouseleave' @click="editMessage(item.id, item.user, true)" v-for="item in filterMessage" :key="item.id" :id='item.id'>
+              <div class="d-flex mx-2 mb-1" v-if="item.type === 'text' " :class="{ 'messageUser': item.user }">
+                <div class="profile-picture profile-picture-sm m-0 position-static align-self-center" v-if="!item.user"></div>
+                <div class="align-self-center messageText ml-3 bg-text" v-if="!(((botSaysPath && !item.user) || (userSaysPath && item.user))  && (item.id === tempAddMessage.bot.id || item.id === tempAddMessage.user.id))">{{ item.message }}</div>
+                <div class="align-self-center messageText ml-3 text-white" style="background-color: #47bd21 !important; border-color: #47bd21 !important;" v-if="((botSaysPath && !item.user) || (userSaysPath && item.user))  && (item.id === tempAddMessage.bot.id || item.id === tempAddMessage.user.id)">Your message will be shown here</div>
               </div>
-              <div class="messageBlock cursor-pointer" :class="{ 'active': saysEditID === item.id }"  @mouseenter="mouseenter(item.id, item.user)" @mouseleave='mouseleave' @click="editMessage(item.id, item.user, true)" v-for="item in filterMessage" :key="item.id" :id='item.id'>
-                <div class="d-flex mx-2 mb-1" v-if="item.type === 'text' " :class="{ 'messageUser': item.user }">
-                  <div class="profile-picture profile-picture-sm m-0 position-static align-self-center" v-if="!item.user"></div>
-                  <div class="align-self-center messageText ml-3 bg-text" v-if="!(((botSaysPath && !item.user) || (userSaysPath && item.user))  && (item.id === tempAddMessage.bot.id || item.id === tempAddMessage.user.id))">{{ item.message }}</div>
-                  <div class="align-self-center messageText ml-3 text-white" style="background-color: #47bd21 !important; border-color: #47bd21 !important;" v-if="((botSaysPath && !item.user) || (userSaysPath && item.user))  && (item.id === tempAddMessage.bot.id || item.id === tempAddMessage.user.id)">Your message will be shown here</div>
+              <div class="d-flex mx-2 mb-1" v-if="item.type === 'image' " :class="{ 'messageUser': item.user }">
+                <div class="profile-picture profile-picture-sm m-0 position-static align-self-end" v-if="!item.user"></div>
+                <div class="align-self-center messageText ml-3 text-white" style="background-color: #47bd21 !important; border-color: #47bd21 !important;" v-if="((botSaysPath && !item.user) || (userSaysPath && item.user))  && (item.id === tempAddMessage.bot.id || item.id === tempAddMessage.user.id)">Your message will be shown here</div>
+                <div class="messageImage d-flex flex-column ml-3" v-if="!(((botSaysPath && !item.user) || (userSaysPath && item.user))  && (item.id === tempAddMessage.bot.id || item.id === tempAddMessage.user.id))">
+                  <div class="align-self-center messageImageText bg-text" v-if="item.message !== ''">{{ item.message }}</div>
+                  <img class="img-fluid" :class="{ 'messageImageBorderRadius': item.message !== ''}" :src="item.image" alt="">
                 </div>
-                <div class="d-flex mx-2 mb-1" v-if="item.type === 'image' " :class="{ 'messageUser': item.user }">
-                  <div class="profile-picture profile-picture-sm m-0 position-static align-self-end" v-if="!item.user"></div>
-                  <div class="align-self-center messageText ml-3 text-white" style="background-color: #47bd21 !important; border-color: #47bd21 !important;" v-if="((botSaysPath && !item.user) || (userSaysPath && item.user))  && (item.id === tempAddMessage.bot.id || item.id === tempAddMessage.user.id)">Your message will be shown here</div>
-                  <div class="messageImage d-flex flex-column ml-3" v-if="!(((botSaysPath && !item.user) || (userSaysPath && item.user))  && (item.id === tempAddMessage.bot.id || item.id === tempAddMessage.user.id))">
-                    <div class="align-self-center messageImageText bg-text" v-if="item.message !== ''">{{ item.message }}</div>
-                    <img class="img-fluid" :class="{ 'messageImageBorderRadius': item.message !== ''}" :src="item.image" alt="">
+              </div>
+              <div class="d-flex mx-2 mb-1" v-if="item.type === 'button' " :class="{ 'messageUser': item.user }">
+                <div class="profile-picture profile-picture-sm m-0 position-static align-self-center" v-if="!item.user"></div>
+                <div class="messageButton d-flex flex-column ml-3 bg-text">
+                  <div class="p-2">{{ item.message }}</div>
+                  <div class="messageButtonBar">
+                    <div class="messageButton-btn py-2 cursor-pointer" @click="changeButtonPath(item.id, index)" :class="{ 'active': item.path === index}" v-for="(itemButton, index) in item.button" :key="index">{{itemButton}}</div>
                   </div>
                 </div>
-                <div class="d-flex mx-2 mb-1" v-if="item.type === 'button' " :class="{ 'messageUser': item.user }">
-                  <div class="profile-picture profile-picture-sm m-0 position-static align-self-center" v-if="!item.user"></div>
-                  <div class="messageButton d-flex flex-column ml-3 bg-text">
-                    <div class="p-2">{{ item.message }}</div>
-                    <div class="messageButtonBar">
-                      <div class="messageButton-btn py-2 cursor-pointer" @click="changeButtonPath(item.id, index)" :class="{ 'active': item.path === index}" v-for="(itemButton, index) in item.button" :key="index">{{itemButton}}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="d-flex align-items-center flex-column my-3" v-if="message.length !== 0">
-                <div class="row justify-content-center flex-column">
-                  <p>What should happen now?</p>
-                  <a class="col-12 d-flex align-items-center flex-column bg-text p-3 cursor-pointer" @click.prevent="openSays('bot')">
-                    <i class="material-icons">message</i><span>ADD NEW MESSAGE</span>
-                  </a>
-                </div>
               </div>
             </div>
-            <div class="phomeFooter">
-              <div class="d-flex d-flex justify-content-around mx-2">
-                <div class="phomeFooter-button align-self-center" style="background-image: url(https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/footer_icons/fb_extension.svg);"></div>
-                <div class="phomeFooter-button align-self-center" style="background-image: url(https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/footer_icons/fb_camera.svg);"></div>
-                <div class="phomeFooter-button align-self-center" style="background-image: url(https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/footer_icons/fb_image.svg);"></div>
-                <div class="phomeFooter-button micro_button align-self-center" style="background-image: url(https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/footer_icons/fb_microphone.svg);"></div>
-                <div class="d-flex messageInput">
-                  <div class="align-self-center ml-2">Aa</div>
-                  <div class="input_emoticon ml-auto align-self-center mr-2"></div>
-                </div>
-                <div class="phomeFooter-button align-self-center" style="background-image: url(https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/footer_icons/fb_menu.svg);"></div>
-              </div>
-              <div class="d-flex justify-content-center mt-2">
-                <!-- <div class="homebar mx-auto my-3"></div> -->
-                <img class="homebar" src="https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/homebar.png" alt="">
+            <div class="d-flex align-items-center flex-column my-3" v-if="message.length !== 0">
+              <div class="row justify-content-center flex-column">
+                <p>What should happen now?</p>
+                <a class="col-12 d-flex align-items-center flex-column bg-text p-3 cursor-pointer" @click.prevent="openSays('bot')">
+                  <i class="material-icons">message</i><span>ADD NEW MESSAGE</span>
+                </a>
               </div>
             </div>
           </div>
-          <div class="featuresBar d-none" :class="{ 'd-flex': featuresBarY !== 0}">
-            <div class="featuresBar-left d-flex flex-column align-items-center justify-content-around" :style="{ top: filterFeaturesBarY + 'px'}">
-              <div class="featuresBar-i bg-white" @click="arrow(false)" :class="{ disabled: (tempFeaturesBarMessage.showPath === 0 && tempFeaturesBarMessage.type !== 'button') || (tempFeaturesBarMessage.path === 0 && tempFeaturesBarMessage.type === 'button') }">
-                <i class="material-icons">arrow_back</i>
+          <div class="phomeFooter">
+            <div class="d-flex d-flex justify-content-around mx-2">
+              <div class="phomeFooter-button align-self-center" style="background-image: url(https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/footer_icons/fb_extension.svg);"></div>
+              <div class="phomeFooter-button align-self-center" style="background-image: url(https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/footer_icons/fb_camera.svg);"></div>
+              <div class="phomeFooter-button align-self-center" style="background-image: url(https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/footer_icons/fb_image.svg);"></div>
+              <div class="phomeFooter-button micro_button align-self-center" style="background-image: url(https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/footer_icons/fb_microphone.svg);"></div>
+              <div class="d-flex messageInput">
+                <div class="align-self-center ml-2">Aa</div>
+                <div class="input_emoticon ml-auto align-self-center mr-2"></div>
               </div>
-              <div class="featuresBar-i bg-white" @click="editMessage(saysEditID, saysEditUser, false)">
-                <i class="material-icons">edit</i>
-              </div>
-              <div class="featuresBar-i bg-white" @click="deleteMessage">
-                <i class="material-icons">delete</i>
-              </div>
+              <div class="phomeFooter-button align-self-center" style="background-image: url(https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/footer_icons/fb_menu.svg);"></div>
             </div>
-            <div class="featuresBar-right d-flex flex-column align-items-center justify-content-around" :style="{ top: filterFeaturesBarY + 'px'}">
-              <div class="featuresBar-i bg-white" @click="arrow(true)" :class="{ disabled: ( tempFeaturesBarMessage.showPath + 1 === tempFeaturesBarMessage.showID.length && tempFeaturesBarMessage.type !== 'button' ) || (tempFeaturesBarMessage.path === (tempFeaturesBarMessage.button.length - 1) && tempFeaturesBarMessage.type === 'button')}">
-                <i class="material-icons">arrow_forward</i>
-              </div>
-              <div class="featuresBar-i bg-white" @click="addPath" v-if="tempFeaturesBarMessage.type !== 'button'">
-                <img src="https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/path_icon_blue.svg">
-              </div>
-              <div class="featuresBar-i bg-white disabled">
-                <i class="material-icons">comment</i>
-              </div>
+            <div class="d-flex justify-content-center mt-2">
+              <!-- <div class="homebar mx-auto my-3"></div> -->
+              <img class="homebar" src="https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/homebar.png" alt="">
             </div>
           </div>
-        </section>
-      </div>
-      <div class="col-3 top8">
+        </div>
+        <div class="featuresBar d-none" :class="{ 'd-flex': featuresBarY !== 0}">
+          <div class="featuresBar-left d-flex flex-column align-items-center justify-content-around" :style="{ top: filterFeaturesBarY + 'px'}">
+            <div class="featuresBar-i bg-white" @click="arrow(false)" :class="{ disabled: (tempFeaturesBarMessage.showPath === 0 && tempFeaturesBarMessage.type !== 'button') || (tempFeaturesBarMessage.path === 0 && tempFeaturesBarMessage.type === 'button') }">
+              <i class="material-icons">arrow_back</i>
+            </div>
+            <div class="featuresBar-i bg-white" @click="editMessage(saysEditID, saysEditUser, false)">
+              <i class="material-icons">edit</i>
+            </div>
+            <div class="featuresBar-i bg-white" @click="deleteMessage">
+              <i class="material-icons">delete</i>
+            </div>
+          </div>
+          <div class="featuresBar-right d-flex flex-column align-items-center justify-content-around" :style="{ top: filterFeaturesBarY + 'px'}">
+            <div class="featuresBar-i bg-white" @click="arrow(true)" :class="{ disabled: ( tempFeaturesBarMessage.showPath + 1 === tempFeaturesBarMessage.showID.length && tempFeaturesBarMessage.type !== 'button' ) || (tempFeaturesBarMessage.path === (tempFeaturesBarMessage.button.length - 1) && tempFeaturesBarMessage.type === 'button')}">
+              <i class="material-icons">arrow_forward</i>
+            </div>
+            <div class="featuresBar-i bg-white" @click="addPath" v-if="tempFeaturesBarMessage.type !== 'button'">
+              <img src="https://d2d9a1sv0xqzzt.cloudfront.net/node/022/images/path_icon_blue.svg">
+            </div>
+            <div class="featuresBar-i bg-white disabled">
+              <i class="material-icons">comment</i>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="userSays top8">
         <div class="" :class="{ user: userSays, editSays:userSaysEdit, pathSays: userSaysPath }">
           <div class="btn btn-lg btn-primary rounded-pill" @click.capture="openSays('user')">
             <div class="d-flex justify-content-around">
@@ -171,10 +167,10 @@
               </ul>
               <form>
                 <div class="bg-white ml-3 d-none" :class="{ 'd-block': userSaysType === 'text' }">
-                  <textarea class="bg-text border-0 my-3 rounded" style="height: 100px;" name="text" id="" cols="30" rows="10" placeholder="Type a message..." v-model="tempAddMessage.user.message"></textarea>
+                  <textarea class="bg-text border-0 my-3 rounded" style="width: 70%; height: 100px;" name="text" id="" rows="10" placeholder="Type a message..." v-model="tempAddMessage.user.message"></textarea>
                 </div>
                 <div class="bg-white ml-3 pb-3 d-none" :class="{ 'd-block': userSaysType === 'image' }">
-                  <textarea class="bg-text border-0 my-3 rounded-top" style="height: 50px;" name="text" id="" cols="30" rows="10" placeholder="Text (optional)" v-model="tempAddMessage.user.message"></textarea>
+                  <textarea class="bg-text border-0 my-3 rounded-top" style="width: 70%; height: 50px;" name="text" id="" rows="10" placeholder="Text (optional)" v-model="tempAddMessage.user.message"></textarea>
                   <label class="addImage rounded-bottom cursor-pointer" for="file-uploaderUser" v-if="tempAddMessage.user.image === ''">
                     <i class="material-icons mt-5">add<p>ADD IMAGE</p></i>
                   </label>
